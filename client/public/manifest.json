@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Screen Text Decoder",
+  "name": "Screen Text Decoder Client",
   "icons": [
     {
       "src": "favicon.ico",
