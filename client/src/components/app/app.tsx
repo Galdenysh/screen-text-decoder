@@ -1,23 +1,36 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import useHttp from "../../hooks/useHttp";
 import styles from "./app.module.css";
 
 const App: FC = () => {
-  const { request } = useHttp();
+  const { request, pending, error } = useHttp();
+  const [texts, setTexts] = useState<string[]>([]);
 
   const clickHandler = async () => {
     try {
-      const data = await request("http://localhost:4000/api/decoder");
+      const body = await request("/api/decoder");
 
-      console.log(data);
+      body.forEach((item: any) => {
+        if (typeof item === "string") setTexts((array) => [...array, item]);
+      });
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
     }
   };
 
   return (
     <main className={styles.container}>
-      <button className={styles.button} onClick={clickHandler}>Print Screen</button>
+      <button
+        className={styles.button}
+        onClick={clickHandler}
+        disabled={pending || error}
+      >
+        {pending ? "Loading" : "Click to decoding"}
+      </button>
+      {texts.map((item, index) => (
+        <p className={styles.text} key={index}>{item}</p>
+      ))}
     </main>
   );
 };

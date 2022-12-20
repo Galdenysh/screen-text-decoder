@@ -3,7 +3,9 @@ import { Request, Response } from "express";
 import fs from "fs";
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
-import { FOLDER_ID } from "../app.config.js";
+import fetch from "node-fetch";
+import { API_KEY, API_VISION_URL, FOLDER_ID } from "../app.config.js";
+import { deepSearchAll } from "../utils/deepSearch.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -25,8 +27,29 @@ export const decoderImage = async (req: Request, res: Response) => {
       }],
     };
 
-    return res.status(200).send({ message: body });
+    const response = await fetch(API_VISION_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Api-Key ${API_KEY}`,
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) throw new Error(`Error ${response.status}`);
+
+    const data = await response.json();
+    const texts = deepSearchAll(data, "text");
+
+    fs.writeFile(path.resolve(__dirname, "../../output/text.txt"), texts.join(", "), (err) => {
+      // eslint-disable-next-line no-console
+      if (err) console.error(err);
+    });
+
+    return res.status(200).send(texts);
   } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error(e);
     return res.status(500).send({ message: "Server error" });
   }
 };
