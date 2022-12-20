@@ -30,12 +30,12 @@
     "settings": {
       "import/resolver": {
         "node": {
-          "extensions": [".js", ".jsx", ".ts", ".tsx"]
+          "extensions": [ ".js", ".jsx", ".ts", ".tsx" ]
         }
       }
     },
     "rules": {
-      "quotes": ["error", "double"],
+      "quotes": [ "error", "double"],
       "import/extensions": [
         "error",
         "ignorePackages",
@@ -45,7 +45,8 @@
           "ts": "never",
           "tsx": "never"
         }
-     ]
+      ],
+      "import/no-unresolved": "off"
     }
   },
   "browserslist": {
@@ -66,6 +67,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "^7.31.11",
-    "eslint-plugin-react-hooks": "^4.6.0"
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "typescript-plugin-css-modules": "^4.1.1"
   }
 }

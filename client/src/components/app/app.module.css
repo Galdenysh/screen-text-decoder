@@ -1,0 +1,21 @@
+.container {
+  padding-top: 40vh;
+  display: flex;
+  justify-content: center;
+  background-color: #20262e;
+}
+
+.button {
+  padding: 15px;
+  min-width: 300px;
+  border: 1px solid #343e4d;
+  border-radius: 12px;
+  background-color: transparent;
+  font-size: 18px;
+  color: var(--main-text-color);
+  transition: opacity 0.2s ease-in-out;
+}
+.button:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
